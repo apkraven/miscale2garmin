@@ -20,6 +20,7 @@ It allows the Mi Body Composition Scale 2 to be fully automatically synchronized
 - Weight.
 
 ## 2. How does this work?
+Code to read weight measurements from Xiaomi Body Scales.
 ![alt text](https://github.com/RobertWojtowicz/miscale2garmin/blob/master/app_states.png)
  - after weighing, Mi Body Composition Scale 2 is active for 15 minutes on bluetooth transmission;
  - ESP32 module operates in a deep sleep and wakes up every 7 minutes, queries scale for data, the process can be started immediately via the reset button;
