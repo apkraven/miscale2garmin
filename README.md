@@ -26,6 +26,8 @@ It allows the Mi Body Composition Scale 2 to be fully automatically synchronized
  - body weight and impedance data on the server are appropriately processed by scripts;
  - processed data are sent by the program bodycomposition to Garmin Connect;
  - raw data from the scale is backed up on the server (renamed to export_file).
+
+![alt text](https://github.com/RobertWojtowicz/miscale2garmin/blob/master/app_states.png)
  
 ## 3. Bluetooth gateway to WiFi (via MQTT) on ESP32
 Use Arduino environment to compile and upload software to ESP32, following libraries required:
