@@ -20,14 +20,13 @@ It allows the Mi Body Composition Scale 2 to be fully automatically synchronized
 - Weight.
 
 ## 2. How does this work?
+![alt text](https://github.com/RobertWojtowicz/miscale2garmin/blob/master/app_states.png)
  - after weighing, Mi Body Composition Scale 2 is active for 15 minutes on bluetooth transmission;
  - ESP32 module operates in a deep sleep and wakes up every 7 minutes, queries scale for data, the process can be started immediately via the reset button;
  - ESP32 module sends the acquired data via the MQTT protocol to the MQTT broker installed on the server;
  - body weight and impedance data on the server are appropriately processed by scripts;
  - processed data are sent by the program bodycomposition to Garmin Connect;
  - raw data from the scale is backed up on the server (renamed to export_file).
-
-![alt text](https://github.com/RobertWojtowicz/miscale2garmin/blob/master/app_states.png)
  
 ## 3. Bluetooth gateway to WiFi (via MQTT) on ESP32
 Use Arduino environment to compile and upload software to ESP32, following libraries required:
