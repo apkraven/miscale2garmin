@@ -75,3 +75,5 @@ Sample photo of the finished module with ESP32 (Wemos LOLIN D32 Pro) and Li-ion 
 - script "export_garmin.py" supports multiple users with individual weights ranges, we can link multiple accounts with Garmin Connect;
 - after weighing, your data will be automatically sent to Garmin Connect;
 - if there is an error sending to Garmin Connect, data will be sent again in a minute, sending errors are saved in a temporary file, e.g. /home/robert/data/temp.log.
+
+<a href="https://www.buymeacoffee.com/RobertWojtowicz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
