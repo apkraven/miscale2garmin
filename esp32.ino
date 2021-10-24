@@ -1,5 +1,5 @@
 /*********
-* Mi Body Composition Scale 2 Garmin Connect v1.3
+* Mi Body Composition Scale 2 Garmin Connect v2.0
 *********/
 
 #include <Arduino.h>
@@ -145,7 +145,7 @@ void StartESP32() {
   // Initializing serial port for debugging purposes
   Serial.begin(115200);
   Serial.println( "" );
-  Serial.println( "Mi Body Composition Scale 2 Garmin Connect v1.3" );
+  Serial.println( "Mi Body Composition Scale 2 Garmin Connect v2.0" );
   Serial.println( "" );
 }
 
@@ -226,19 +226,19 @@ void ScanBLE() {
 
       // Currently we just send the raw values over and let app figure out the rest
       publish_data += String( weight );
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += String( impedance, 0 );
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += String( strUnits );
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += String( user );
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += String( time_unix );
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += time;
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += String( voltage );
-      publish_data += String(",");
+      publish_data += String(";");
       publish_data += String( percentage );
       publish();
     }  

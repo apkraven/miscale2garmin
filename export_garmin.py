@@ -1,5 +1,5 @@
 # *********
-# Mi Body Composition Scale 2 Garmin Connect v1.4
+# Mi Body Composition Scale 2 Garmin Connect v2.0
 # *********
 
 import Xiaomi_Scale_Body_Metrics
@@ -36,15 +36,12 @@ miimpedance = 0
 mitdatetime = 0
 for filename in glob.glob((path) + '/data/import_*.log'):
 	with open(filename, 'r') as csv_file:
-		csv_reader = csv.reader(csv_file, delimiter=',')
-		line_count = 0
+		csv_reader = csv.reader(csv_file, delimiter=';')
 		for row in csv_reader:
-			if line_count == 1:
 				weight = float(row[0])
 				miimpedance = float(row[1])
 				mitdatetime = str(row[4])
 				break
-			line_count += 1
 
 selected_user = None
 for user in users:
