@@ -10,10 +10,10 @@ path=/home/robert
 
 #Create a data backup file
 if [ ! -f $path/data/backup.csv ] ; then
-	echo '* Create a data collection file'
+	echo '* Create a data backup file'
 	echo '* Weight;Impedance;Units;User;Unix_time;Readable_time;Bat_in_V;Bat_in_%' > $path/data/backup.csv
 else
-	echo '* Data collection file exists'
+	echo '* Data backup file exists'
 fi
 
 # Create file with import data
