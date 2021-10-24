@@ -27,7 +27,7 @@ Code to read weight measurements from Mi Body Composition Scale 2:
  - ESP32 module sends the acquired data via the MQTT protocol to the MQTT broker installed on the server;
  - body weight and impedance data on the server are appropriately processed by scripts;
  - processed data are sent by the program bodycomposition to Garmin Connect;
- - raw data from the scale is backed up on the server (renamed to export_file).
+ - raw data from the scale is backed up on the server in backup.csv file.
  
 ## 3. Bluetooth gateway to WiFi (via MQTT) on ESP32
 Use Arduino environment to compile and upload software to ESP32, following libraries required:
