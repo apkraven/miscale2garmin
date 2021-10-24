@@ -1,5 +1,5 @@
 # *********
-# Mi Body Composition Scale 2 Garmin Connect v2.0
+# Mi Body Composition Scale 2 Garmin Connect v2.1
 # *********
 
 # Data acquisition from MQTT broker
@@ -20,16 +20,16 @@ fi
 read_MQTT=`mosquitto_sub -h $host -t 'data' -u $user -P $passwd -C 1 | awk -F "\"*;\"*" 'END{print $5}'`
 if grep -q $read_MQTT $path/data/backup.csv ; then
 	echo '* This data has already been exported'
-elif [ -f $path/data/import_$read_MQTT.log ] ; then
+elif [ -f $path/data/$read_MQTT.tlog ] ; then
 	echo '* This import file already exists'
 else
-	mosquitto_sub -h $host -t 'data' -u $user -P $passwd -C 1 > $path/data/import_$read_MQTT.log
+	mosquitto_sub -h $host -t 'data' -u $user -P $passwd -C 1 > $path/data/$read_MQTT.tlog
 fi
 
 # Calculate data and export to Garmin Connect, logging, handling errors, backup file
-if [ -f $path/data/import_* ] ; then
+if [ -f $path/data/*.tlog ] ; then
 	python3 $path/export_garmin.py > $path/data/temp.log 2>&1
-	move=`awk -F "_" '/Processed file: import/{print $2}' $path/data/temp.log`
+	move=`awk -F ": " '/Processed file:/{print $2}' $path/data/temp.log`
 	if grep -q 'Error' $path/data/temp.log ; then
 		echo 'Errors have been detected'
 	elif grep -q 'panic' $path/data/temp.log ; then
@@ -37,7 +37,7 @@ if [ -f $path/data/import_* ] ; then
 	elif grep -q 'denied' $path/data/temp.log ; then
 		echo '* Errors have been detected'
 	else
-		cat $path/data/import_$move >> $path/data/backup.csv
-		rm $path/data/import_$move
+		cat $path/data/$move >> $path/data/backup.csv
+		rm $path/data/$move
 	fi
 fi

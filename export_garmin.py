@@ -1,5 +1,5 @@
 # *********
-# Mi Body Composition Scale 2 Garmin Connect v2.0
+# Mi Body Composition Scale 2 Garmin Connect v2.1
 # *********
 
 import Xiaomi_Scale_Body_Metrics
@@ -34,14 +34,14 @@ path = '/home/robert'
 weight = 0
 miimpedance = 0
 mitdatetime = 0
-for filename in glob.glob((path) + '/data/import_*.log'):
+for filename in glob.glob((path) + '/data/*.tlog'):
 	with open(filename, 'r') as csv_file:
 		csv_reader = csv.reader(csv_file, delimiter=';')
 		for row in csv_reader:
-				weight = float(row[0])
-				miimpedance = float(row[1])
-				mitdatetime = str(row[4])
-				break
+			weight = float(row[0])
+			miimpedance = float(row[1])
+			mitdatetime = str(row[4])
+			break
 
 selected_user = None
 for user in users:
@@ -49,7 +49,7 @@ for user in users:
 		selected_user = user
 		break
 
-# Calculating body metrics and send data to Garmin Connect
+# Calcuating body metrics and send data to Garmin Connect
 if selected_user is not None:
 	lib = Xiaomi_Scale_Body_Metrics.bodyMetrics(weight, selected_user.height, selected_user.age, selected_user.sex, int(miimpedance))
 	bone_percentage = (lib.getBoneMass() / weight) * 100
@@ -69,6 +69,6 @@ if selected_user is not None:
 	message += '--weight ' + "{:.2f}".format(weight) + ' '
 	message += '--max-tries 1'
 	os.system(message)
-	print("Processed file: import_" + (mitdatetime) + ".log")
+	print("Processed file: " + (mitdatetime) + ".tlog")
 else:
 	print("There is no user with the given weight")
