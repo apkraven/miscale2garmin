@@ -72,7 +72,7 @@ Sample photo of the finished module with ESP32 (Wemos LOLIN D32 Pro) and Li-ion 
 ## 5. Configuring scripts
 - first script is "import_mqtt.sh", you need to complete data: "user", "password", "host", which are related to the MQTT broker;
 - add in import_mqtt.sh" path to the folder where the copied files are, e.g. "/home/robert";
-- add script import_mqtt.sh to CRON to run it every 1 minute: * / 1 * * * * /home/robert/import_mqtt.sh;
+- add script import_mqtt.sh to CRON to run it every 1 minute: */1 * * * * /home/robert/import_mqtt.sh;
 - second script is "export_garmin.py", you must complete data in the "user" section: sex, height in cm, birthdate in dd-mm-yyyy, email and password to Garmin Connect, max_weight in kg, min_weight in kg;
 - add in "export_garmin.py", path to the folder where the copied files are, e.g. "/home/robert";
 - script "export_garmin.py" supports multiple users with individual weights ranges, we can link multiple accounts with Garmin Connect;
