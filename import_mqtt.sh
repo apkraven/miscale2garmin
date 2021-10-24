@@ -11,7 +11,7 @@ path=/home/robert
 #Create a data backup file
 if [ ! -f $path/data/backup.csv ] ; then
 	echo '* Create a data backup file, checking for new data'
-	echo '* Weight;Impedance;Units;User;Unix_time;Readable_time;Bat_in_V;Bat_in_%' > $path/data/backup.csv
+	echo 'Weight;Impedance;Units;User;Unix_time;Readable_time;Bat_in_V;Bat_in_%' > $path/data/backup.csv
 else
 	echo '* Data backup file exists, checking for new data'
 fi
