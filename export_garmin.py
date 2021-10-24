@@ -71,4 +71,4 @@ if selected_user is not None:
 	os.system(message)
 	print("Processed file: " + (mitdatetime) + ".tlog")
 else:
-	print("There is no user with the given weight")
+	print("There is no user with the given weight, skipping upload to Garmin Connect")
