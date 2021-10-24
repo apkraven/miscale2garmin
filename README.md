@@ -76,7 +76,8 @@ Sample photo of the finished module with ESP32 (Wemos LOLIN D32 Pro) and Li-ion 
 - second script is "export_garmin.py", you must complete data in the "user" section: sex, height in cm, birthdate in dd-mm-yyyy, email and password to Garmin Connect, max_weight in kg, min_weight in kg;
 - add in "export_garmin.py", path to the folder where the copied files are, e.g. "/home/robert";
 - script "export_garmin.py" supports multiple users with individual weights ranges, we can link multiple accounts with Garmin Connect;
-- after weighing, your data will be automatically sent to Garmin Connect;
-- if there is an error sending to Garmin Connect, data will be sent again in a minute, sending errors are saved in a temporary file, e.g. /home/robert/data/temp.log.
+- after weighing, your data will be automatically upload to Garmin Connect;
+- if there is an error upload to Garmin Connect, data will be sent again in a minute, upload errors are saved in a temporary file, e.g. /home/robert/data/temp.log;
+- script import_mqtt.sh has implemented debug mode, you can verify if everything is working properly, just execute it from console.
 
 <a href="https://www.buymeacoffee.com/RobertWojtowicz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
