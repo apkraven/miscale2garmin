@@ -24,6 +24,7 @@ elif [ -f $path/data/$read_MQTT.tlog ] ; then
 	echo '* Import file already exists, calculating data to upload'
 else
 	mosquitto_sub -h $host -t 'data' -u $user -P $passwd -C 1 > $path/data/$read_MQTT.tlog
+	echo '* Importing and calculating data to upload'
 fi
 
 # Calculate data and export to Garmin Connect, logging, handling errors, backup file
