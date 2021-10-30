@@ -1,7 +1,3 @@
-/*********
-* Mi Body Composition Scale 2 Garmin Connect v2.0
-*********/
-
 #include <Arduino.h>
 #include <PubSubClient.h>
 #include <WiFiUdp.h>
@@ -52,9 +48,9 @@ int16_t stoi2( String input, uint16_t index1 ) {
     return (int16_t)( strtol( (input.substring( index1+2, index1+4 ) + input.substring( index1, index1+2 )).c_str(), NULL, 16) );
 }
 
-// Deep sleep for 5 minutes
+// Deep sleep for 7 minutes
 void goToDeepSleep() {
-  Serial.println( "Waiting for next scan, going to sleep" );
+  Serial.println( "* Waiting for next scan, going to sleep" );
   esp_sleep_enable_timer_wakeup( 7 * 60 * 1000000 );
   esp_deep_sleep_start();
 }
@@ -72,7 +68,7 @@ void reconnect() {
   int nFailCount = 0;
   if ( WiFi.status() != WL_CONNECTED ) {
     Serial.println();
-    Serial.print("Connecting to WiFi: ");
+    Serial.print("* Connecting to WiFi: ");
     Serial.println(ssid);
     WiFi.config(ip, gateway, subnet);
     WiFi.begin(ssid, password);
@@ -82,16 +78,16 @@ void reconnect() {
       Serial.print(".");
       nFailCount++;
       if ( nFailCount > 1500 )
-        // Why can't we connect? Just try it after waking up
-        errorLED();
+         // Why can't we connect? Just try it after waking up
+         errorLED();
     }
     Serial.println("");
-    Serial.println("WiFi connected!");    
+    Serial.println("* WiFi connected!");    
   }
   
   // Loop until we're reconnected
   while (!mqtt_client.connected()) {
-    Serial.print("Connecting to MQTT: ");
+    Serial.print("* Connecting to MQTT: ");
     mqtt_client.setServer(mqtt_server, mqtt_port);
 
     // Attempt to connect
@@ -99,7 +95,7 @@ void reconnect() {
       Serial.println("MQTT connected!");
     }
     else {
-      Serial.print("MQTT failed!, rc=");
+      Serial.print("* MQTT failed!, rc=");
       Serial.print(mqtt_client.state());
       Serial.println(", try again in 200 milliseconds");
       delay(200);
@@ -115,14 +111,14 @@ void publish() {
     reconnect();
   }
   mqtt_client.publish(mqtt_topic_attributes.c_str(), publish_data.c_str(), true );
-  Serial.print( "Publishing MQTT data: " );
+  Serial.print( "* Publishing MQTT data: " );
   Serial.println( publish_data.c_str() );
   delay( 2000 );
 }
 
 class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
-      Serial.print("BLE device found with address: ");
+      Serial.print("* BLE device found with address: ");
       Serial.print(advertisedDevice.getAddress().toString().c_str());
       if ( advertisedDevice.getAddress().toString() == scale_mac_addr ) {
         Serial.println(" <= target device!");
@@ -142,22 +138,18 @@ void StartESP32() {
   delay(250);
   digitalWrite(led_pin, HIGH);
 
-  // Initializing serial port for debugging purposes
+  // Initializing serial port for debugging purposes, version info
   Serial.begin(115200);
   Serial.println( "" );
-  Serial.println( "Mi Body Composition Scale 2 Garmin Connect v2.0" );
+  Serial.println( "Mi Body Composition Scale 2 Garmin Connect v2.1" );
   Serial.println( "" );
 }
 
 void ScanBLE() {
-  Serial.println( "Starting BLE scan:" );
+  Serial.println( "* Starting BLE scan:" );
   if ( WiFi.status() == WL_CONNECTED ) {
-    Serial.println( "Disconnecting from MQTT" );  
     mqtt_client.disconnect();
-    delay( 1000 );            
-    Serial.println( "Disconnecting from WiFi" );
     WiFi.disconnect();
-    delay( 1000 );
   }
   BLEDevice::init("");
   BLEScan *pBLEScan = BLEDevice::getScan(); //Create new scan.
@@ -184,7 +176,7 @@ void ScanBLE() {
     float weight = stoi2( hex, 22 ) * 0.005;
     float impedance = stoi2( hex, 18 );
     if ( unNoImpedanceCount < 3 && impedance <= 0 ) {
-      Serial.println( "Reading BLE data incomplete, finished BLE scan" );
+      Serial.println( "* Reading BLE data incomplete, finished BLE scan" );
       errorLED();
     }
     unNoImpedanceCount = 0;
@@ -215,7 +207,7 @@ void ScanBLE() {
     
     if ( weight > 0 ) {
       // LED blinking for 0.75 second, indicate finish reading BLE data
-      Serial.println( "Reading BLE data complete, finished BLE scan" );
+      Serial.println( "* Reading BLE data complete, finished BLE scan" );
       digitalWrite(led_pin, LOW);
       delay(250);
       digitalWrite(led_pin, HIGH);

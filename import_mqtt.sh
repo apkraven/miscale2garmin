@@ -1,12 +1,12 @@
-# *********
-# Mi Body Composition Scale 2 Garmin Connect v2.1
-# *********
-
 # Data acquisition from MQTT broker
 user=admin
 passwd=password
 host=host_name
 path=/home/robert
+
+# Version Info
+echo 'Mi Body Composition Scale 2 Garmin Connect v2.1'
+echo ''
 
 #Create a data backup file
 if [ ! -f $path/data/backup.csv ] ; then

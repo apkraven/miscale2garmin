@@ -1,12 +1,11 @@
-# *********
-# Mi Body Composition Scale 2 Garmin Connect v2.1
-# *********
-
 import Xiaomi_Scale_Body_Metrics
 import csv
 import os
 import glob
 import datetime
+
+# Version Info
+print("Mi Body Composition Scale 2 Garmin Connect v2.1")
 
 class User():
 	def __init__(self, sex, height, birthdate, email, password, max_weight, min_weight):
