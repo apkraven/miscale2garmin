@@ -86,7 +86,7 @@ void connectWiFi() {
        Serial.print("* IP Address: ");
        Serial.println(WiFi.localIP());
        while (WiFi.status() != WL_CONNECTED) {
-         delay(500);
+         delay(10);
          Serial.print(".");
          nFailCount++;
          if (nFailCount > 1500)
