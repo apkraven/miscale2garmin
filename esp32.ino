@@ -144,7 +144,6 @@ void ScanBLE() {
     BLEAdvertisedDevice d = foundDevices.getDevice(i);
     if (d.getAddress().toString() != scale_mac_addr)
       continue;
-    Serial.println("");
     String hex;
     if (d.haveServiceData()) {
       std::string md = d.getServiceData();
