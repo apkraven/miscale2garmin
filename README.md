@@ -3,7 +3,6 @@
 ## 1. Introduction
 This project is based on the following projects:
 - https://github.com/rando-calrissian/esp32_xiaomi_mi_2_hass;
-- https://github.com/danilopinotti/Battery18650Stats
 - https://github.com/lolouk44/xiaomi_mi_scale;
 - https://github.com/davidkroell/bodycomposition.
 
@@ -34,7 +33,8 @@ Code to read weight measurements from Mi Body Composition Scale 2:
 Use Arduino environment to compile and upload software to ESP32, following libraries required:
 - PubSubClient: https://github.com/knolleary/pubsubclient;
 - ESP32 Arduino (warning, use version 1.4, newer is unstable): https://github.com/espressif/arduino-esp32;
-- Timestamps: https://github.com/alve89/Timestamps.
+- Timestamps: https://github.com/alve89/Timestamps;
+- Battery 18650 Stats: https://github.com/danilopinotti/Battery18650Stats.
 
 In Arduino, select the WEMOS LOLIN32 board and set parameters:
 - CPU Frequency: "80MHz (WiFi / BT)" for better energy saving;
