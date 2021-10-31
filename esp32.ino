@@ -72,7 +72,7 @@ void StartESP32() {
   // Initializing serial port for debugging purposes, version info
   Serial.begin(115200);
   Serial.println("");
-  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.2");
+  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.1");
   Serial.println("");
 }
 
@@ -109,9 +109,7 @@ void connectMQTT() {
        delay(200);
        nFailCount++;
        if (nFailCount > 500)
-       
-          // Why can't we connect? Just try it after waking up
-          errorLED();
+          errorLED(); // Why can't we connect? Just try it after waking up
     }  
 }
 
@@ -210,7 +208,6 @@ void ScanBLE() {
       mqtt_client.publish(mqtt_topic_attributes.c_str(), publish_data.c_str(), true);
       Serial.print("* Publishing MQTT data: ");
       Serial.println(publish_data.c_str());
-      goToDeepSleep();
     }  
   }
 }
@@ -218,6 +215,7 @@ void ScanBLE() {
 void setup() {
   StartESP32();
   ScanBLE();
+  goToDeepSleep();
 }
 
 void loop() {
