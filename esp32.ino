@@ -50,7 +50,7 @@ int16_t stoi2(String input, uint16_t index1) {
 
 void goToDeepSleep() {
   // Deep sleep for 7 minutes
-  Serial.println("* Waiting for next scan, going to sleep");
+  Serial.print("* Waiting for next scan, going to sleep");
   esp_sleep_enable_timer_wakeup(7 * 60 * 1000000);
   esp_deep_sleep_start();
 }
