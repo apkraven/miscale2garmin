@@ -3,7 +3,7 @@
 ## 1. Introduction
 This project is based on the following projects:
 - https://github.com/rando-calrissian/esp32_xiaomi_mi_2_hass;
-- https://github.com/G6EJD/LiPo_Battery_Capacity_Estimator;
+- https://github.com/danilopinotti/Battery18650Stats
 - https://github.com/lolouk44/xiaomi_mi_scale;
 - https://github.com/davidkroell/bodycomposition.
 
@@ -43,8 +43,8 @@ In Arduino, select the WEMOS LOLIN32 board and set parameters:
 
 The following information must be entered before compiling code (esp32.ino):
 - scale's mac address, it can be read from the Mi Fit application ("scale_mac_addr");
-- parameters of your WiFi network ("ssid", "password", "ip", "gateway", "subnet");
-- other settings ("led_pin", "adc_pin", "Timestamps");
+- parameters of your WiFi network ("ssid", "password");
+- other settings ("led_pin", "Timestamps", "Battery18650Stats");
 - connection parameters MQTT ("mqtt_server", "mqtt_port", "mqtt_userName", "mqtt_userPass").
 
 Debug and other comments:
@@ -53,7 +53,7 @@ Debug and other comments:
 - after switching the device on, blue LED will light up for a moment to indicate that the module has started successfully;
 - if the data are acquired correctly in the next step, blue LED will flash for a moment 2 times;
 - if there is an error, e.g. the data is incomplete, no connection to the WiFi network or the MQTT broker, blue LED will light up for 5 seconds;
-- program implements the battery level and voltage measurement (beta, is not working properly yet), which are sent together with the scale data in topic MQTT;
+- program implements voltage measurement and battery level, which are sent together with the scale data in topic MQTT;
 - device has 2 buttons, the first green is the reset button (monostable), the red one is the battery power switch (bistable).
 
 Sample photo of the finished module with ESP32 (Wemos LOLIN D32 Pro) and Li-ion 18650 battery (LG 3600mAh, LGDBM361865):
