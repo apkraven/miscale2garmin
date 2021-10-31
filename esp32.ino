@@ -185,7 +185,7 @@ void ScanBLE() {
       delay(250);
       digitalWrite(led_pin, HIGH);
 
-      // Currently we just send the raw values over and let app figure out the rest
+      // Prepare to send raw values
       publish_data += String(weight);
       publish_data += String(";");
       publish_data += String(impedance, 0);
@@ -202,7 +202,7 @@ void ScanBLE() {
       publish_data += String(";");
       publish_data += String(battery.getBatteryChargeLevel(true));
 
-      // Send data to MQTT broker
+      // Send data to MQTT broker and let app figure out the rest
       connectMQTT();
       mqtt_client.publish(mqtt_topic_attributes.c_str(), publish_data.c_str(), true);
       Serial.print("* Publishing MQTT data: ");
