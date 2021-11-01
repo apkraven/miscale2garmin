@@ -71,7 +71,7 @@ void StartESP32() {
   Serial.println("");
 }
 
-void errorLED_WiFi() {
+void errorLED_connect() {
   pinMode(led_pin, OUTPUT); 
   digitalWrite(led_pin, LOW);
   delay(5000);
@@ -96,17 +96,9 @@ void connectWiFi() {
        delay(200);
        nFailCount++;
        if (nFailCount > 75)
-          errorLED_WiFi();
+          errorLED_connect();
     }
   }
-}
-
-void errorLED_MQTT() {
-  pinMode(led_pin, OUTPUT); 
-  digitalWrite(led_pin, LOW);
-  delay(5000);
-  Serial.println("failed");
-  goToDeepSleep();
 }
 
 void connectMQTT() {
@@ -123,7 +115,7 @@ void connectMQTT() {
        delay(200);
        nFailCount++;
        if (nFailCount > 75)
-          errorLED_MQTT();
+          errorLED_connect();
     }  
   }
 }
@@ -143,7 +135,7 @@ class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
     }
 };
 
-void errorLED_BLE() {
+void errorLED_scan() {
   pinMode(led_pin, OUTPUT); 
   digitalWrite(led_pin, LOW);
   delay(5000);
@@ -178,7 +170,7 @@ void ScanBLE() {
     float weight = stoi2(hex, 22) * 0.005;
     float impedance = stoi2(hex, 18);
     if (unNoImpedanceCount < 3 && impedance <= 0) {
-      errorLED_BLE();
+      errorLED_scan();
     }
     unNoImpedanceCount = 0;
     int user = stoi(hex, 6);
