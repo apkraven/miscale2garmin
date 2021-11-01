@@ -8,7 +8,7 @@ path=/home/robert
 echo 'Mi Body Composition Scale 2 Garmin Connect v2.1'
 echo ''
 
-#Create a data backup file
+# Create a data backup file
 if [ ! -f $path/data/backup.csv ] ; then
 	echo '* Create a data backup file, checking for new data'
 	echo 'Weight;Impedance;Units;User;Unix_time;Readable_time;Bat_in_V;Bat_in_%' > $path/data/backup.csv
