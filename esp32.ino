@@ -75,54 +75,55 @@ void errorLED_WiFi() {
   pinMode(led_pin, OUTPUT); 
   digitalWrite(led_pin, LOW);
   delay(5000);
-  Serial.println("");
-  Serial.println("* Connection to WiFi failed");
+  Serial.println("failed");
   goToDeepSleep();
 }
 
 void connectWiFi() {
    int nFailCount = 0;
-       Serial.print("* Connecting to WiFi: ");
-       Serial.println(ssid);
+   Serial.print("* Connecting to WiFi: ");
+     while (WiFi.status() != WL_CONNECTED) {
        WiFi.mode(WIFI_STA);
        WiFi.begin(ssid, password);
        WiFi.waitForConnectResult();
-       Serial.print("* IP Address: ");
-       Serial.println(WiFi.localIP());
-       while (WiFi.status() != WL_CONNECTED) {
-         delay(10);
-         Serial.print(".");
-         nFailCount++;
-         if (nFailCount > 1500)
-            errorLED_WiFi();
-        }
+     if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("connected");
+        Serial.print("* IP Address: ");
+        Serial.println(WiFi.localIP());
+     }
+     else {
+       Serial.print(".");
+       delay(200);
+       nFailCount++;
+       if (nFailCount > 75)
+          errorLED_WiFi();
+    }
+  }
 }
 
 void errorLED_MQTT() {
   pinMode(led_pin, OUTPUT); 
   digitalWrite(led_pin, LOW);
   delay(5000);
-  Serial.println("* Connection to MQTT failed");
+  Serial.println("failed");
   goToDeepSleep();
 }
 
 void connectMQTT() {
    int nFailCount = 0;
    connectWiFi();
+   Serial.print("* Connecting to MQTT: ");
      while (!mqtt_client.connected()) {
-       Serial.print("* Connecting to MQTT: ");
        mqtt_client.setServer(mqtt_server, mqtt_port);
      if (mqtt_client.connect(mqtt_clientId.c_str(),mqtt_userName,mqtt_userPass)) {
        Serial.println("connected");
      }
      else {
-       Serial.print("failed, rc=");
-       Serial.print(mqtt_client.state());
-       Serial.println(", try again in 200 milliseconds");
+       Serial.print(".");
        delay(200);
        nFailCount++;
        if (nFailCount > 75)
-          errorLED_MQTT(); // Why can't we connect? Just try it after waking up
+          errorLED_MQTT();
     }  
   }
 }
