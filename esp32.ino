@@ -1,3 +1,5 @@
+// WARNING use Arduino ESP32 version 1.4, newer is unstable
+
 #include <Arduino.h>
 #include <PubSubClient.h>
 #include <WiFiUdp.h>
@@ -55,13 +57,6 @@ void goToDeepSleep() {
   esp_deep_sleep_start();
 }
 
-void errorLED() {
-  pinMode(led_pin, OUTPUT); 
-  digitalWrite(led_pin, LOW);
-  delay(5000);
-  goToDeepSleep();
-}
-
 void StartESP32() {
   // LED indicate start ESP32, is on for 0.25 second
   pinMode(led_pin, OUTPUT); 
@@ -72,8 +67,17 @@ void StartESP32() {
   // Initializing serial port for debugging purposes, version info
   Serial.begin(115200);
   Serial.println("");
-  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.1");
+  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.2");
   Serial.println("");
+}
+
+void errorLED_WiFi() {
+  pinMode(led_pin, OUTPUT); 
+  digitalWrite(led_pin, LOW);
+  delay(5000);
+  Serial.println("");
+  Serial.println("* Connection to WiFi failed");
+  goToDeepSleep();
 }
 
 void connectWiFi() {
@@ -90,27 +94,37 @@ void connectWiFi() {
          Serial.print(".");
          nFailCount++;
          if (nFailCount > 1500)
-            errorLED();
+            errorLED_WiFi();
         }
+}
+
+void errorLED_MQTT() {
+  pinMode(led_pin, OUTPUT); 
+  digitalWrite(led_pin, LOW);
+  delay(5000);
+  Serial.println("* Connection to MQTT failed");
+  goToDeepSleep();
 }
 
 void connectMQTT() {
    int nFailCount = 0;
-       connectWiFi();
+   connectWiFi();
+     while (!mqtt_client.connected()) {
        Serial.print("* Connecting to MQTT: ");
        mqtt_client.setServer(mqtt_server, mqtt_port);
      if (mqtt_client.connect(mqtt_clientId.c_str(),mqtt_userName,mqtt_userPass)) {
        Serial.println("connected");
      }
      else {
-       Serial.print("* MQTT failed, rc=");
+       Serial.print("failed, rc=");
        Serial.print(mqtt_client.state());
        Serial.println(", try again in 200 milliseconds");
        delay(200);
        nFailCount++;
-       if (nFailCount > 500)
-          errorLED(); // Why can't we connect? Just try it after waking up
+       if (nFailCount > 75)
+          errorLED_MQTT(); // Why can't we connect? Just try it after waking up
     }  
+  }
 }
 
 class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
@@ -118,7 +132,7 @@ class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
       Serial.print("* BLE device found with address: ");
       Serial.print(advertisedDevice.getAddress().toString().c_str());
       if (advertisedDevice.getAddress().toString() == scale_mac_addr) {
-        Serial.print(" <= target device");
+        Serial.println(" <= target device");
         BLEScan *pBLEScan = BLEDevice::getScan(); // found what we want, stop now
         pBLEScan->stop();
       }
@@ -127,6 +141,14 @@ class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
       }      
     }
 };
+
+void errorLED_BLE() {
+  pinMode(led_pin, OUTPUT); 
+  digitalWrite(led_pin, LOW);
+  delay(5000);
+  Serial.println("* Reading BLE data incomplete, finished BLE scan");
+  goToDeepSleep();
+}
 
 void ScanBLE() {
   Serial.println("* Starting BLE scan:");
@@ -155,8 +177,7 @@ void ScanBLE() {
     float weight = stoi2(hex, 22) * 0.005;
     float impedance = stoi2(hex, 18);
     if (unNoImpedanceCount < 3 && impedance <= 0) {
-      Serial.println("* Reading BLE data incomplete, finished BLE scan");
-      errorLED();
+      errorLED_BLE();
     }
     unNoImpedanceCount = 0;
     int user = stoi(hex, 6);
