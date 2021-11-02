@@ -1,5 +1,4 @@
-// WARNING use Arduino ESP32 version 1.4, newer is unstable
-
+// WARNING use Arduino ESP32 library version 1.4, newer is unstable
 #include <Arduino.h>
 #include <PubSubClient.h>
 #include <WiFiUdp.h>
@@ -18,7 +17,7 @@
 const char* ssid = "ssid_name";
 const char* password = "password";
 
-// LED indicate error, is on for 5 seconds, for LOLIN32 D32 PRO is pin 5
+// Synchronization status LED, for LOLIN32 D32 PRO is pin 5
 const int led_pin = 5;
 
 // Instantiating object of class Timestamp with an time offset of -3600 seconds for UTC+01:00
