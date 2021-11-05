@@ -1,4 +1,4 @@
-// WARNING use Arduino ESP32 library version 1.4, newer is unstable
+// WARNING use Arduino ESP32 library version 1.0.4, newer is unstable
 #include <Arduino.h>
 #include <PubSubClient.h>
 #include <WiFiUdp.h>
@@ -66,7 +66,7 @@ void StartESP32() {
   // Initializing serial port for debugging purposes, version info
   Serial.begin(115200);
   Serial.println("");
-  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.2");
+  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.3");
   Serial.println("");
 }
 
@@ -126,6 +126,7 @@ class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
       if (advertisedDevice.getAddress().toString() == scale_mac_addr) {
         Serial.println(" <= target device");
         BLEScan *pBLEScan = BLEDevice::getScan(); // found what we want, stop now
+        delay(200);
         pBLEScan->stop();
       }
       else {
