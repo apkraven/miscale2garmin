@@ -32,7 +32,7 @@ Code to read weight measurements from Mi Body Composition Scale 2:
 ## 3. Bluetooth gateway to WiFi (via MQTT) on ESP32
 Use Arduino environment to compile and upload software to ESP32, following libraries required:
 - PubSubClient: https://github.com/knolleary/pubsubclient;
-- Arduino ESP32 **(_WARNING_, use version 1.4, newer is unstable)**: https://github.com/espressif/arduino-esp32;
+- Arduino ESP32 **(_WARNING_, use version 1.0.4, newer is unstable)**: https://github.com/espressif/arduino-esp32;
 - Timestamps: https://github.com/alve89/Timestamps;
 - Battery 18650 Stats: https://github.com/danilopinotti/Battery18650Stats.
 
