@@ -87,7 +87,7 @@ void connectWiFi() {
        WiFi.waitForConnectResult();
      if (WiFi.status() == WL_CONNECTED) {
         Serial.println("connected");
-        Serial.print("* IP Address: ");
+        Serial.print("  IP address: ");
         Serial.println(WiFi.localIP());
      }
      else {
