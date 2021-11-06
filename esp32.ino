@@ -66,7 +66,7 @@ void StartESP32() {
   // Initializing serial port for debugging purposes, version info
   Serial.begin(115200);
   Serial.println("");
-  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.3");
+  Serial.println("Mi Body Composition Scale 2 Garmin Connect v2.2");
   Serial.println("");
 }
 
@@ -121,12 +121,11 @@ void connectMQTT() {
 
 class MyAdvertisedDeviceCallbacks : public BLEAdvertisedDeviceCallbacks {
     void onResult(BLEAdvertisedDevice advertisedDevice) {
-      Serial.print("* BLE device found with address: ");
+      Serial.print("  BLE device found with address: ");
       Serial.print(advertisedDevice.getAddress().toString().c_str());
       if (advertisedDevice.getAddress().toString() == scale_mac_addr) {
         Serial.println(" <= target device");
         BLEScan *pBLEScan = BLEDevice::getScan(); // found what we want, stop now
-        delay(200);
         pBLEScan->stop();
       }
       else {
