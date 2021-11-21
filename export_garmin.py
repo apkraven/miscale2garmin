@@ -5,7 +5,7 @@ import glob
 import datetime
 
 # Version Info
-print("Mi Body Composition Scale 2 Garmin Connect v2.1")
+print("Mi Body Composition Scale 2 Garmin Connect v2.2")
 
 class User():
 	def __init__(self, sex, height, birthdate, email, password, max_weight, min_weight):
@@ -56,6 +56,7 @@ if selected_user is not None:
 	message = (path) + '/bodycomposition upload '
 	message += '--bone ' + "{:.2f}".format(bone_percentage) + ' '
 	message += '--calories ' + "{:.2f}".format(lib.getBMR()) + ' '
+	message += '--bmi ' + "{:.2f}".format(lib.getBMI()) + ' '
 	message += '--email ' + selected_user.email + ' '
 	message += '--fat ' + "{:.2f}".format(lib.getFatPercentage()) + ' '
 	message += '--hydration ' + "{:.2f}".format(lib.getWaterPercentage()) + ' '
@@ -66,7 +67,6 @@ if selected_user is not None:
 	message += '--unix-timestamp ' + mitdatetime + ' '
 	message += '--visceral-fat ' + "{:.2f}".format(lib.getVisceralFat()) + ' '
 	message += '--weight ' + "{:.2f}".format(weight) + ' '
-	message += '--max-tries 1'
 	os.system(message)
 	print("Processed file: " + (mitdatetime) + ".tlog")
 else:
