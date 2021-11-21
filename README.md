@@ -7,10 +7,10 @@ This project is based on the following projects:
 - https://github.com/davidkroell/bodycomposition.
 
 It allows the Mi Body Composition Scale 2 to be fully automatically synchronized to Garmin Connect, the following parameters:
+- BMI;
 - Body Fat;
 - Body Water;
 - Bone Mass;
-- Caloric Intake (beta, is not working properly yet);
 - Metabolic Age;
 - Physique Rating;
 - Skeletal Muscle Mass;
