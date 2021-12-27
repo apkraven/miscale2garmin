@@ -22,30 +22,11 @@ It allows the Mi Body Composition Scale 2 to be fully automatically synchronized
 Code to read weight measurements from Mi Body Composition Scale 2:
 ![alt text](https://github.com/RobertWojtowicz/miscale2garmin/blob/master/app_states.png)
  - after weighing, Mi Body Composition Scale 2 is active for 15 minutes on bluetooth transmission;
- - ESP32 module operates in a deep sleep and wakes up every 7 minutes, queries scale for data, the process can be started immediately via the reset button;
- - ESP32 module sends the acquired data via the MQTT protocol to the MQTT broker installed on the server;
+ - Home assistant module reads the scale readings and sends it to MQTT via mosquitto;
  - body weight and impedance data on the server are appropriately processed by scripts;
  - processed data are sent by the program bodycomposition to Garmin Connect;
  - raw data from the scale is backed up on the server in backup.csv file;
  - backup.csv file can be imported e.g. for analysis into Excel. 
- 
-## 3. Bluetooth gateway to WiFi (via MQTT) on ESP32
-Use Arduino environment to compile and upload software to ESP32, following libraries required:
-- PubSubClient: https://github.com/knolleary/pubsubclient;
-- Arduino ESP32 **(_WARNING_, use version 1.0.4, newer is unstable)**: https://github.com/espressif/arduino-esp32;
-- Timestamps: https://github.com/alve89/Timestamps;
-- Battery 18650 Stats: https://github.com/danilopinotti/Battery18650Stats.
-
-In Arduino, select the WEMOS LOLIN32 board and set parameters:
-- CPU Frequency: "80MHz (WiFi / BT)" for better energy saving;
-- Partition Scheme: "No OTA (Large APP)";
-- Port: "COM" on which ESP32 board is detected.
-
-The following information must be entered before compiling code (esp32.ino):
-- scale's mac address, it can be read from the Mi Fit application ("scale_mac_addr");
-- parameters of your WiFi network ("ssid", "password");
-- other settings ("led_pin", "Timestamps", "Battery18650Stats");
-- connection parameters MQTT ("mqtt_server", "mqtt_port", "mqtt_userName", "mqtt_userPass").
 
 Debug and other comments:
 - project is prepared to work with the ESP32 board with the charging module (red LED indicates charging). I based my version on the Li-ion 18650 battery;
@@ -55,9 +36,6 @@ Debug and other comments:
 - if there is an error, e.g. the data is incomplete, no connection to the WiFi network or the MQTT broker, blue LED will light up for 5 seconds;
 - program implements voltage measurement and battery level, which are sent together with the scale data in topic MQTT;
 - device has 2 buttons, the first green is the reset button (monostable), the red one is the battery power switch (bistable).
-
-Sample photo of the finished module with ESP32 (Wemos LOLIN D32 Pro) and Li-ion 18650 battery (LG 3600mAh, LGDBM361865):
-![alt text](https://github.com/RobertWojtowicz/miscale2garmin/blob/master/esp32.jpg)
 
 ## 4. Preparing Linux system
 - I based on a virtual machine with Debian Buster. I prefer the minimal version with an ssh server (Net Install);
