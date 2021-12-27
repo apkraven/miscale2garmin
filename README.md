@@ -2,9 +2,9 @@
 
 ## 1. Introduction
 This project is based on the following projects:
-- https://github.com/rando-calrissian/esp32_xiaomi_mi_2_hass;
 - https://github.com/lolouk44/xiaomi_mi_scale;
 - https://github.com/davidkroell/bodycomposition.
+- https://github.com/RobertWojtowicz/miscale2garmin
 
 It allows the Mi Body Composition Scale 2 to be fully automatically synchronized to Garmin Connect, the following parameters:
 - BMI;
@@ -28,15 +28,6 @@ Code to read weight measurements from Mi Body Composition Scale 2:
  - raw data from the scale is backed up on the server in backup.csv file;
  - backup.csv file can be imported e.g. for analysis into Excel. 
 
-Debug and other comments:
-- project is prepared to work with the ESP32 board with the charging module (red LED indicates charging). I based my version on the Li-ion 18650 battery;
-- program for ESP32 has implemented UART debug mode, you can verify if everything is working properly;
-- after switching the device on, blue LED will light up for a moment to indicate that the module has started successfully;
-- if the data are acquired correctly in the next step, blue LED will flash for a moment 2 times;
-- if there is an error, e.g. the data is incomplete, no connection to the WiFi network or the MQTT broker, blue LED will light up for 5 seconds;
-- program implements voltage measurement and battery level, which are sent together with the scale data in topic MQTT;
-- device has 2 buttons, the first green is the reset button (monostable), the red one is the battery power switch (bistable).
-
 ## 4. Preparing Linux system
 - I based on a virtual machine with Debian Buster. I prefer the minimal version with an ssh server (Net Install);
 - minimum hardware requirements are: 1 CPU, 512 MB RAM, 2 GB HDD, network connection (e.g. Raspberry Pi Zero W with Pi OS Lite);
@@ -57,5 +48,3 @@ Debug and other comments:
 - after weighing, your data will be automatically upload to Garmin Connect;
 - if there is an error upload to Garmin Connect, data will be sent again in a minute, upload errors are saved in a temporary file, e.g. /home/robert/data/temp.log;
 - script import_mqtt.sh has implemented debug mode, you can verify if everything is working properly, just execute it from console.
-
-<a href="https://www.buymeacoffee.com/RobertWojtowicz" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
